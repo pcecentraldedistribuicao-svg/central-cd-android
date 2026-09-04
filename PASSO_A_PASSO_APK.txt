@@ -1,0 +1,17 @@
+CENTRAL CD 10&CIA - GERAR APK
+
+O projeto deste pacote ja aponta para:
+https://script.google.com/macros/s/AKfycbx_M5toGyI4iSg1Ox1Pur9mJySUXN-bN3FOXKS7mrG5WQscqAfy9I5FSsra1mCdvTE/exec
+
+PASSOS RAPIDOS
+1. Extraia o ZIP.
+2. Crie um repositorio privado no GitHub.
+3. Envie TODO o conteudo extraido, inclusive a pasta .github.
+4. No GitHub, abra Actions.
+5. Abra Build Central CD APK.
+6. Clique Run workflow.
+7. Aguarde ficar verde.
+8. Na execucao concluida, baixe o artefato Central-CD-APK.
+9. Extraia e instale app-debug.apk no Android.
+
+Nao precisa criar o secret CENTRAL_URL para este primeiro build.

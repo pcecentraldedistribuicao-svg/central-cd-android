@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.application'
+}
+
+def defaultCentralUrl = 'https://script.google.com/macros/s/AKfycbx_M5toGyI4iSg1Ox1Pur9mJySUXN-bN3FOXKS7mrG5WQscqAfy9I5FSsra1mCdvTE/exec'
+def centralUrl = project.findProperty('CENTRAL_URL') ?: defaultCentralUrl
+
+def escapedCentralUrl = centralUrl.replace('\\', '\\\\').replace('"', '\\"')
+
+android {
+    namespace 'br.com.centralcd.cia'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'br.com.centralcd.cia'
+        minSdk 24
+        targetSdk 35
+        versionCode 3
+        versionName '1.0.2'
+        buildConfigField 'String', 'CENTRAL_URL', '"' + escapedCentralUrl + '"'
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
