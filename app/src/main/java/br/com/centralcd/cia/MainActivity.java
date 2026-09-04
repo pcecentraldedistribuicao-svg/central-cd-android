@@ -25,7 +25,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.net.URLUtil;
+import android.webkit.URLUtil;
 
 public class MainActivity extends Activity {
     private static final int FILE_CHOOSER_REQUEST = 9001;
@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
         s.setJavaScriptCanOpenWindowsAutomatically(true);
         s.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         s.setCacheMode(WebSettings.LOAD_DEFAULT);
-        s.setUserAgentString(s.getUserAgentString() + " CentralCDAndroid/1.0.2");
+        s.setUserAgentString(s.getUserAgentString() + " CentralCDAndroid/1.0.3");
 
         CookieManager cookies = CookieManager.getInstance();
         cookies.setAcceptCookie(true);
@@ -189,23 +189,33 @@ public class MainActivity extends Activity {
         final EditText input = new EditText(this);
         input.setHint("https://script.google.com/macros/s/.../exec");
         input.setSingleLine(true);
-        new AlertDialog.Builder(this)
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
             .setTitle("Configurar Central CD")
             .setMessage("Informe uma única vez o link /exec publicado da Central CD 10&CIA.")
             .setView(input)
             .setCancelable(false)
             .setPositiveButton("Salvar", null)
             .setNegativeButton("Sair", (d, w) -> finish())
-            .setOnShowListener(dialog -> ((AlertDialog)dialog).getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            .create();
+
+        dialog.setOnShowListener(d -> {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
                 String value = input.getText().toString().trim();
                 if (!value.startsWith("https://") || !value.contains("/exec")) {
-                    input.setError("Informe o link HTTPS terminado em /exec."); return;
+                    input.setError("Informe o link HTTPS terminado em /exec.");
+                    return;
                 }
-                getSharedPreferences(PREFS, MODE_PRIVATE).edit().putString(PREF_URL, value).apply();
-                ((AlertDialog)dialog).dismiss();
+                getSharedPreferences(PREFS, MODE_PRIVATE)
+                    .edit()
+                    .putString(PREF_URL, value)
+                    .apply();
+                dialog.dismiss();
                 webView.loadUrl(value);
-            }))
-            .show();
+            });
+        });
+
+        dialog.show();
     }
 
     @Override
