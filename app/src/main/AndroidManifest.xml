@@ -8,7 +8,9 @@
         android:allowBackup="false"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
-        android:label="Central CD 10&amp;CIA">
+        android:label="Central CD 10&amp;CIA"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round">
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -1,24 +1,22 @@
-# Central CD 10&CIA - Android Shell 1.0.3 CORRIGIDO
+# Central CD 10&CIA - Android Shell 1.0.4
 
-Projeto Android WebView configurado para abrir diretamente a Central CD publicada em:
+Aplicativo Android WebView da Central CD 10&CIA.
 
-https://script.google.com/macros/s/AKfycbx_M5toGyI4iSg1Ox1Pur9mJySUXN-bN3FOXKS7mrG5WQscqAfy9I5FSsra1mCdvTE/exec
+## Atualizações
 
-## Correcoes desta versao
-- AndroidManifest.xml com `10&amp;CIA` (XML valido).
-- `URLUtil` importado de `android.webkit.URLUtil`.
-- Dialogo de configuracao corrigido: `setOnShowListener` aplicado ao `AlertDialog`, nao ao `Builder`.
-- Workflow do GitHub Actions incluido em `.github/workflows/build-apk.yml`.
-- Versao Android 1.0.3 / versionCode 4.
+- **Central Web (Code.gs/HTML):** atualiza automaticamente no aplicativo sempre que a mesma implantação `/exec` é atualizada.
+- **Aplicativo Android:** só precisa nova versão quando houver alteração nativa (ícone, permissões Android, WebView, downloads etc.). A versão 1.0.4 verifica a última GitHub Release e avisa quando houver APK nativo mais novo.
 
-## Estrutura correta no repositorio
-- `.github/workflows/build-apk.yml`
-- `app/...`
-- `build.gradle`
-- `gradle.properties`
-- `settings.gradle`
+## Ícone
 
-## Build
-Ao enviar o conteudo deste projeto para a branch `main`, o GitHub Actions executa `Build Central CD APK`.
-Quando ficar verde, abra a execucao e baixe o artefato `Central-CD-APK-1.0.3`.
-Dentro do ZIP do artefato estara `app-debug.apk`.
+A versão 1.0.4 inclui ícone próprio amarelo/azul da Central CD.
+
+## Build rápido
+
+`Build Central CD APK` gera um APK debug para teste.
+
+## Release oficial assinada
+
+`Publish Signed Central CD APK` gera APK release com assinatura permanente e publica em GitHub Releases. Antes, configure os secrets descritos em `release_setup/GITHUB_SECRETS.txt`.
+
+**Nunca publique a pasta `release_setup` no repositório público.** Ela contém a chave de assinatura e dados secretos.

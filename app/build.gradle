@@ -6,6 +6,13 @@ def defaultCentralUrl = 'https://script.google.com/macros/s/AKfycbx_M5toGyI4iSg1
 def centralUrl = project.findProperty('CENTRAL_URL') ?: defaultCentralUrl
 
 def escapedCentralUrl = centralUrl.replace('\\', '\\\\').replace('"', '\\"')
+def appVersionCode = (project.findProperty('APP_VERSION_CODE') ?: '5') as Integer
+def appVersionName = project.findProperty('APP_VERSION_NAME') ?: '1.0.4'
+
+def releaseStoreFile = project.findProperty('RELEASE_STORE_FILE')
+def releaseStorePassword = project.findProperty('RELEASE_STORE_PASSWORD')
+def releaseKeyAlias = project.findProperty('RELEASE_KEY_ALIAS')
+def releaseKeyPassword = project.findProperty('RELEASE_KEY_PASSWORD')
 
 android {
     namespace 'br.com.centralcd.cia'
@@ -15,8 +22,8 @@ android {
         applicationId 'br.com.centralcd.cia'
         minSdk 24
         targetSdk 35
-        versionCode 4
-        versionName '1.0.3'
+        versionCode appVersionCode
+        versionName appVersionName
         buildConfigField 'String', 'CENTRAL_URL', '"' + escapedCentralUrl + '"'
     }
 
@@ -24,10 +31,24 @@ android {
         buildConfig true
     }
 
+    signingConfigs {
+        release {
+            if (releaseStoreFile) {
+                storeFile file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (releaseStoreFile) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 }
